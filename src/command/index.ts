@@ -12,7 +12,6 @@ export function copy_template(targetDir: string, template?: string) {
     }
     const templatePath = path.resolve(fileURLToPath(import.meta.url), `../../template/${template || cliOptions.template}`);
     copy(templatePath, targetDir);
-    console.log(cliOptions.npmToken)
     // 处理 npmrc;
     const _code = `auto-install-peers = true\n
     registry=https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/\n
@@ -43,7 +42,6 @@ export async function install() {
             cwd: _cwd
         });
     };
-    console.log(_cwd)
     // 安装依赖
     if (cliOptions.packageManage !== 'none') {
         bin_run_inherit(`${cliOptions.packageManage} install`, {
