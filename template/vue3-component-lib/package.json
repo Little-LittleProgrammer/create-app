@@ -1,0 +1,69 @@
+{
+  "name": "@q-front-npm/vue3-pc-ui",
+  "version": "1.1.4",
+  "description": "vue3-pc端组件库",
+  "main": "dist/lib/index.js",
+  "module": "dist/es/index.js",
+  "typings": "dist/index.d.ts",
+  "publishConfig": {
+    "registry": "https://packages.aliyun.com/5f6426fcdb0493ecef9118ab/npm/npm-registry/"
+  },
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/lib/index.js"
+    },
+    "./es": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/es/index.js"
+    },
+    "./lib": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/lib/index.js"
+    },
+    "./es/*": {
+      "types": "./dist/src/*.d.ts",
+      "import": "./dist/es/*.js"
+    },
+    "./lib/*": {
+      "types": "./dist/src/*.d.ts",
+      "require": "./dist/lib/*.js"
+    },
+    "./*": "./*"
+  },
+  "scripts": {
+    "build": "vite build",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
+  },
+  "author": "Evan Wu",
+  "license": "MIT",
+  "dependencies": {
+    "@q-front-npm/shared": "workspace:*",
+    "@q-front-npm/utils": "workspace:*"
+  },
+  "devDependencies": {
+    "@q-front-npm-configs/vite": "workspace:*",
+    "@q-front-npm/types": "workspace:*",
+    "@vue/test-utils": "^2.4.0",
+    "sass": "^1.63.3",
+    "vue": "~3.3.4",
+    "vue-router": "^4.2.4",
+    "@changesets/cli": "^2.24.3",
+    "eslint": "^7.32.0",
+    "typescript": "^5.1.3",
+    "@q-front-npm-configs/eslint": "~1.0.0",
+    "@q-front-npm-configs/tsconfig": "~1.0.0",
+    "vite": "^4.4.9",
+    "tslib": "^2.5.3",
+    "@types/node": "^20.2.5"
+  },
+  "peerDependencies": {
+    "vue": "~3.3.4",
+    "vue-router": "^4.2.4"
+  }
+}

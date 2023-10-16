@@ -27,9 +27,9 @@
 <script lang='ts'>
 import { api_manage_role_list, api_manage_role_delete} from '@/http/api/system-management/permission/role';
 import { IRoleAuths } from '@/http/api/system-management/permission/role'; // 接口
-import { js_utils_set_table_height } from '@q-front-npm/utils';
 import { defineComponent, reactive, toRefs, onMounted} from 'vue';
 import { useMessage } from '@q-front-npm/hooks/vue';
+import {js_utils_set_table_height} from '@q-front-npm/utils';
 import { useAntdStore } from '@/store/modules/antd';
 import { useGlobalStore } from '@/store/modules/global';
 import EditRole from './components/edit-role.vue';
@@ -52,11 +52,11 @@ export default defineComponent({
                     width: 160,
                     dataIndex: 'role_name'
                 },
-                // {
-                //     title: '初始页面',
-                //     width: 200,
-                //     dataIndex: 'init_auth_name'
-                // },
+                {
+                    title: '初始页面',
+                    width: 200,
+                    dataIndex: 'init_auth_name'
+                },
                 {
                     title: '备注',
                     // width: 160,
@@ -80,7 +80,7 @@ export default defineComponent({
             const _res = await api_manage_role_list();
 
             if (_res.code == 200){
-                data.tableData = _res.data.list;
+                data.tableData = _res.data?.table_list || [];
             }
         };
 

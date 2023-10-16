@@ -1,13 +1,14 @@
 import { cliOptions } from "../../enums/default-options"
 import { ICliOptions } from "../../type/options"
 import { create_question } from "../../utils/question"
-import { nuxt3TempalteQuestion, vue3TempalteQuestion } from "../vue3"
+import { nuxt2TemplateQuestion, vue2TemplateQuestion } from "../vue2"
+import { nuxt3TemplateQuestion, vue3TemplateQuestion } from "../vue3"
 import { frameQuestion, infrastructureMode } from "./frame"
 import { otherQuestion } from "./other"
 import { pkgManageQuestion } from "./package-manage"
 import { projectName } from "./project-name"
 
-export async function create_app() {
+export async function create_app_questions() {
     try {
         await create_question(projectName) // 输入名称
         await create_question(pkgManageQuestion) // 选择包管理器
@@ -22,10 +23,10 @@ export async function create_app() {
 
 async function choose_template(frame: ICliOptions['frame']) {
     const templateObj = {
-        vue3: vue3TempalteQuestion,
-        nuxt3: nuxt3TempalteQuestion,
-        vue2: vue2TempalteQuestion,
-        nuxt2: nuxt2TempalteQuestion
+        vue3: vue3TemplateQuestion,
+        nuxt3: nuxt3TemplateQuestion,
+        vue2: vue2TemplateQuestion,
+        nuxt2: nuxt2TemplateQuestion
     };
     await create_question(templateObj[frame])
 }

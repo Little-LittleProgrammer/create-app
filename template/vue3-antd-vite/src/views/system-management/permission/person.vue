@@ -2,11 +2,11 @@
 <template>
     <div>
         <a-card class="g-card" :size="antdStore.cardSize">
-            <q-form @register="register">
+            <q-antd-form @register="register">
                 <template #formFooter>
                     <a-button type="primary" @click="show_add_edit_pop('add')">添加</a-button>
                 </template>
-            </q-form>
+            </q-antd-form>
         </a-card>
         <a-card class="g-card mt" :size="antdStore.cardSize">
             <a-table
@@ -34,21 +34,21 @@
                 </template>
             </a-table>
         </a-card>
-        <a-modal :width="500" :size="antdStore.modelSize" :title="data.addEditUserDataPop.title" v-model:visible="data.addEditUserDataPop.visible" :centered="true" @cancel="user_cancel" @ok="user_submit">
-            <q-form @register="registerEdit"></q-form>
+        <a-modal :width="500" :size="antdStore.modelSize" :title="data.addEditUserDataPop.title" v-model:open="data.addEditUserDataPop.visible" :centered="true" @cancel="user_cancel" @ok="user_submit">
+            <q-antd-form @register="registerEdit"></q-antd-form>
         </a-modal>
     </div>
-    </template>
+</template>
 
 <script lang='ts' setup>
 import {gRegEnum} from '@q-front-npm/shared/enums';
 import { useMessage } from '@q-front-npm/hooks/vue';
 import { IPersonEditData, ITableList } from '@/http/api/system-management/permission/person';
-import { api_manage_user_list, api_manage_user_delete, api_manage_user_edit} from '@/http/api/system-management/permission/person';
+import { api_manage_user_list, api_manage_user_delete, api_manage_user_edit, api_manage_user_add} from '@/http/api/system-management/permission/person';
 import { api_manage_role_options } from '@/http/api/system-management/permission/role';
 import { RuleObject } from 'ant-design-vue/lib/form/interface';
 import { reactive, onMounted, computed, nextTick} from 'vue';
-import { FormSchema, QForm, useForm } from '@q-front-npm/vue3-antd-pc-ui';
+import { FormSchema, useForm } from '@q-front-npm/vue3-antd-pc-ui';
 import { useGlobalStore } from '@/store/modules/global';
 import { useAntdStore } from '@/store/modules/antd';
 
@@ -203,13 +203,13 @@ const [registerEdit, {resetFields, getFieldsValue, validate, setFieldsValue}] = 
 const init_data = async() => { // 获取用户列表
     const _res = await api_manage_user_list();
     if (_res.code == 200) {
-        data.tableData = _res.data.list.reverse();
+        data.tableData = _res.data.table_list.reverse();
     }
 };
 const get_user_options = async() => {
     const _res = await api_manage_role_options();
     if (_res.code == 200) {
-        data.roleOptions = _res.data.role_list;
+        data.roleOptions = _res.data.table_list || [];
     }
 };
 
@@ -225,7 +225,7 @@ const user_del = (obj: Record<'id', number>) => { // 删除用户
 const user_add = () => { // 添加用户
     validate().then(() => {
         globalStore.pageLoading = true;
-        api_manage_user_edit({
+        api_manage_user_add({
             role_id_arr: data.formData.role_id_arr,
             username: data.formData.username,
             email: data.formData.email
@@ -296,6 +296,6 @@ onMounted(() => {
     get_user_options();
 });
 </script>
-<style lang='scss' scoped>
-</style>
+    <style lang='scss' scoped>
+    </style>
 

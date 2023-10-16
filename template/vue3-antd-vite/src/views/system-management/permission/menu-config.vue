@@ -7,7 +7,7 @@
                     <a-button type="primary" @click="add_first_level_menu">添加一级菜单</a-button>
                 </a-form-item>
             </a-form>
-            <q-table-tree-drag v-model:expandedRowKeys="expandedKeys" :table-options="tableOption" @refreshTable="handel_table_drag">
+            <q-antd-table-tree-drag v-model:expandedRowKeys="expandedKeys" :table-options="tableOption" @refreshTable="handel_table_drag">
                 <template #bodyCell="{ text, record, column }">
                     <template v-if="column.key === 'auth_name'">
                         <template v-if="record.edit && record.edit == 1">
@@ -45,10 +45,10 @@
                     </template>
                     <template v-if="column.key === 'icon'">
                         <template v-if="record.edit && record.edit == 1 && record.path_type == 1">
-                            <q-icon-picker v-model:value="record.icon"></q-icon-picker>
+                            <q-antd-icon-picker v-model:value="record.icon"></q-antd-icon-picker>
                         </template>
                         <template v-else-if="record.icon">
-                            <QIcon :type="record.icon"></QIcon>
+                            <q-antd-icon :type="record.icon"></q-antd-icon>
                             <span class="ml">{{text}}</span>
                         </template>
                     </template>
@@ -81,22 +81,20 @@
                         </template>
                     </template>
                 </template>
-            </q-table-tree-drag>
+            </q-antd-table-tree-drag>
         </a-card>
     </div>
 </template>
 
 <script lang='ts'>
-import { js_utils_deep_copy } from '@q-front-npm/utils';
 import { useMessage } from '@q-front-npm/hooks/vue';
-import { QIconPicker, QIcon } from '@q-front-npm/vue3-antd-pc-ui';
-import {QTableTreeDrag, TableProps} from '@q-front-npm/vue3-antd-pc-ui';
+import { TableProps } from '@q-front-npm/vue3-antd-pc-ui';
 import { api_manage_auth_create, api_manage_auth_delete, api_manage_auth_list, api_manage_auth_sort, api_manage_auth_update } from '@/http/api/system-management/permission/menu-config';
 import { defineComponent, reactive, toRefs, onMounted, ref, computed, unref } from 'vue';
 import { useGlobalStore } from '@/store/modules/global';
-import { js_utils_get_table_header_columns } from '@q-front-npm/utils';
 import { useAntdStore } from '@/store/modules/antd';
 import type { IMenuData } from '@q-front-npm/types/vue/router';
+import { js_utils_deep_copy, js_utils_get_table_header_columns } from '@q-front-npm/utils';
 interface DataProps {
     sonIds: number[];
     tableData: IMenuData[];
@@ -108,7 +106,7 @@ interface DataProps {
 
 export default defineComponent({
     name: 'MenuConfig',
-    components: {QIconPicker, QIcon, QTableTreeDrag},
+    components: {QAntdIconPicker, QAntdIcon, QAntdTableTreeDrag},
     setup() {
         const authNameWidth = 250;
         const store = useGlobalStore();
@@ -182,7 +180,7 @@ export default defineComponent({
             store.pageLoading = true;
             const _res = await api_manage_auth_list();
             if (_res.code == 200) {
-                data.tableData = _res.data.list;
+                data.tableData = _res.data.table_list;
                 data.isTreeShow = true;
             }
         };
@@ -245,7 +243,7 @@ export default defineComponent({
                 id: obj.id
             };
             if (_data.id && _data.id >= 1000000) {
-                delete _data.id;
+                Reflect.deleteProperty(_data, 'id');
                 store.pageLoading = true;
                 api_manage_auth_create(_data).then((res) => {
                     if (res.code == 200) {

@@ -1,4 +1,4 @@
-import { ConfigEnv, UserConfig, loadEnv } from 'vite';
+import { ConfigEnv, UserConfig } from 'vite';
 import { vite_common_vue_config } from '@q-front-npm-configs/vite';
 import { antdCssData, baseScssFile } from './config/antd';
 import { resolve } from 'path';
@@ -11,12 +11,11 @@ export default ({ command, mode }: ConfigEnv):UserConfig => {
     const _common = vite_common_vue_config({ command, mode });
     return {
         ..._common,
+        define: {
+            'process.env.cssData': antdCssData
+        },
         css: {
             preprocessorOptions: {
-                less: {
-                    modifyVars: antdCssData,
-                    javascriptEnabled: true
-                },
                 scss: {
                     additionalData: baseScssFile
                 }

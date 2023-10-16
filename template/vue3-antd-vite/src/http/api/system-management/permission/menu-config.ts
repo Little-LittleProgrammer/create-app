@@ -2,14 +2,16 @@ import { defHttp } from '@/http/axios';
 import type { IMenuData } from '@q-front-npm/types/vue/router';
 
 enum Api {
-    authList = '/permission/auth/list',
-    authEdit = '/permission/auth/replace',
-    authDelete = '/permission/auth/delete',
-    authSort = '/permission/auth/sort'
+    authList = '/manage/auth/index',
+    authAdd = '/manage/auth/create',
+    authEdit = '/manage/auth/update',
+    authDelete = '/manage/auth/delete',
+    authSort = '/manage/auth/sort',
+    authData = '/manage/auth/data'
 }
 
 interface IAuthData {
-    list: IMenuData[]
+    table_list: IMenuData[]
 }
 
 export interface ISortAuth {
@@ -17,14 +19,14 @@ export interface ISortAuth {
     pid: number;
 }
 
-// 角色-列表
+// 菜单-列表
 export function api_manage_auth_list() {
     return defHttp.get<Result<IAuthData>>({url: Api.authList});
 }
 
 // 菜单-添加
 export function api_manage_auth_create(data: IMenuData) {
-    return defHttp.post<Result<Record<'id', number>>>({url: Api.authEdit, data});
+    return defHttp.post<Result<Record<'id', number>>>({url: Api.authAdd, data});
 }
 
 // 菜单-编辑

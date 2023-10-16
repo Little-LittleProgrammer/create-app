@@ -15,13 +15,13 @@
                         </template>
                         <a-button type="link">
                             <template #icon>
-                                <QIcon class="search-icon" type="SearchOutlined" />
+                                <QAntdIcon class="search-icon" type="SearchOutlined" />
                             </template>
                         </a-button>
                     </a-tooltip>
                 </div>
                 <q-theme-mode-button v-model:mode="themePorxy" v-if="getShowThemeSwitch" class="g-flex-center search-container"></q-theme-mode-button>
-                <q-setting class="g-flex-center search-container" :defaultSetting="setting"></q-setting>
+                <q-antd-setting class="g-flex-center search-container" :defaultSetting="setting"></q-antd-setting>
             </template>
         </qm-header>
         <div class="wrapper">
@@ -30,14 +30,14 @@
                 <div class="main-header sticky-header" v-if="getBreadCrumb || getShowCacheTabsSetting" size="small">
                     <div class="g-flex">
                         <q-breadcrumb v-if="getBreadCrumb" class="breadcrumb" :router-list="routerData" :class="!getShowCacheTabsSetting ? 'flex': ''"></q-breadcrumb>
-                        <q-keep-alive-tabs v-if="getShowCacheTabsSetting" :canDrag="getCacheCanDrag" :showQuick="getShowQuick" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-keep-alive-tabs>
+                        <q-antd-keep-alive-tabs v-if="getShowCacheTabsSetting" :canDrag="getCacheCanDrag" :showQuick="getShowQuick" :init-path="sysStore.initMenuData" class="keep-alive" :style="data.width" @cache-list="set_cache_list" @register="register"></q-antd-keep-alive-tabs>
                         <div class="reload" v-if="getShowReloadButton">
                             <a-tooltip  >
                                 <template #title>
                                     <span>刷新页面</span>
                                 </template>
                                 <a-button size="small" type="link" @click="reload_page">
-                                    <template #icon><QIcon type="RedoOutlined" :spin="data.reloadLoading"/></template>
+                                    <template #icon><QAntdIcon type="RedoOutlined" :spin="data.reloadLoading"/></template>
                                 </a-button>
                             </a-tooltip>
                         </div>
@@ -60,29 +60,29 @@
             </div>
         </div>
         <back-top v-if="getBackTop" :target="getTarget"></back-top>
-        <q-search :visible="data.modalVisible" :mainMenuData="sysStore.mainMenuData" @cancel="change_search_modal"></q-search>
+        <q-antd-search :visible="data.modalVisible" :mainMenuData="sysStore.mainMenuData" @cancel="change_search_modal"></q-antd-search>
     </div>
 </template>
 
 <script lang='ts' setup>
 import { reactive, computed, ref, watch, nextTick } from 'vue';
+import { useProjectSetting} from '@q-front-npm/vue3-antd-pc-ui';
 import elementResizeDetectorMaker from 'element-resize-detector';
 import QmHeader from '@/components/layout/qm-header.vue';
 import QmAside from '@/components/layout/qm-aside.vue';
 import { useRouter } from 'vue-router';
-import {QLoading, QThemeModeButton} from '@q-front-npm/vue3-pc-ui';
 import { useSysStore } from '@/store/modules/systemManage';
 import { useGlobalStore } from '@/store/modules/global';
 import { routerData } from '@/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import setting from '@/enums/projectEnum';
 import { BackTop } from 'ant-design-vue';
-import { QKeepAliveTabs, QSetting, QBreadcrumb, useProjectSetting, QSearch, QIcon } from '@q-front-npm/vue3-antd-pc-ui';
+import { useParamsAliveRoot } from '@q-front-npm/hooks/vue';
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();
-const {getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, getOpenKeepAlive, getCacheCanDrag, getShowQuick} = useProjectSetting();
-const {setThemeMode, getThemeMode} = useThemeSetting();
+const {getSearchButton, getShowThemeSwitch, getShowReloadButton, getShowTransition, getShowCacheTabsSetting, getBreadCrumb, getBackTop, getShowPageLoading, getOpenKeepAlive, getCacheCanDrag, getShowQuick, getCacheCanCache} = useProjectSetting();
+const {setThemeMode} = useThemeSetting();
 const data = reactive({
     // routeRefresh: 1,
     modalVisible: false,
@@ -124,16 +124,27 @@ const reload_page = async() => {
     }, 1000);
 };
 
+// 刷新时记住参数, 具体使用请参考文档
+// https://project-docs.qmniu.com/packages/hooks/use-params-alive.html
+useParamsAliveRoot({
+    aliveTabs: cacheList,
+    projectSetting: {
+        cache: getCacheCanCache,
+        keepalive: getOpenKeepAlive,
+        show: getShowCacheTabsSetting
+    }
+});
+
 // 设置主题
 const themePorxy = computed<'dark' | 'light'>({
     get() {
-        return getThemeMode.value;
+        return globalStore.getThemeMode;
     },
     set(val: 'dark' | 'light') {
         setThemeMode(val);
     }
 });
-setThemeMode(getThemeMode.value);
+setThemeMode(themePorxy.value);
 watch(() => getBreadCrumb.value, (val) => {
     nextTick(() => {
         if (getShowCacheTabsSetting.value && val) {
@@ -152,7 +163,6 @@ watch(() => getBreadCrumb.value, (val) => {
 </script>
 <style lang='scss' scoped>
 .main-header {
-    padding: 5px;
     height: 40px;
     padding-left: $space + 14;
     @include bg-color(aside-bg);
@@ -213,6 +223,7 @@ watch(() => getBreadCrumb.value, (val) => {
 }
 .layout-content {
     height: calc(100% - 40px);
+    box-sizing: border-box;
     position: relative;
     padding-top: 10px;
     padding-left: 10px;

@@ -1,31 +1,48 @@
-import { bin_run_ignore, bin_run_inherit } from "../utils";
+import { readFileSync, writeFileSync } from "fs-extra";
+import { cliOptions } from "../enums/default-options";
+import { get_root, rm_dir, rm_file } from "../utils/fs";
+import { copy_template } from "../command";
+import { monorepoNotNeed } from "../enums/template";
 
-import pkg from '../../package.json'
-import { cli_update } from "../questions/update";
-import chalk from "chalk";
-
-async function need_update() {
-    const _string = bin_run_ignore('npm show create-app versions')!.replace('\'', '\"');
-    const _arr = JSON.parse(_string);
-    if (_arr) {
-        let _newVersion = _arr[_arr.length-1];
-        if (_newVersion !== pkg.version) {
-            const _options = await cli_update(_newVersion, pkg.version);
-            if (_options.isUpdate === 'yes' ) {
-                bin_run_inherit('npm update create-app -g');
-                chalk.green('update ok');
-                return true;
-            } else {
-                return false
+export function copy_project() {
+    const _projectName = cliOptions.projectName
+    if (cliOptions.infrastructureMode === 'monorepo') {
+        if ( ['vue3', 'nuxt3'].includes(cliOptions.frame)) {
+            const _rootDir = get_root(`${_projectName}-monorepo`)
+            copy_template(_rootDir, 'monorepo');
+            const _subDir = `${_rootDir}/${_projectName.includes('lib') ? 'packages': 'apps'}/${_projectName}`;
+            copy_template(_subDir);
+            // 处理多余的依赖
+            const pkgContent = readFileSync(`${_subDir}/package.json`, 'utf8');
+            if (pkgContent) {
+                const _text = JSON.parse(pkgContent);
+                if (_text.devDependencies){
+                    for (let key of monorepoNotNeed) {
+                        _text.devDependencies[key] && Reflect.deleteProperty(_text.devDependencies, key)
+                    }
+                }
+                writeFileSync(`${_subDir}/package.json`, JSON.stringify(_text))
             }
+            
+            // 删除内部的npmrc，以及gitignore;
+            rm_file(`${_subDir}/.npmrc`)
+            rm_file(`${_subDir}/.gitignore`)  
         }
+    } else {
+        const _rootDir = get_root(`${_projectName}`);
+        copy_template(_rootDir);
     }
-    return false
 }
 
-async function create_app() {
-    const _needUpdate = await need_update();
-    if (!_needUpdate) {
-        
+
+export function delete_overwrite_dir() {
+    const _projectName = cliOptions.projectName
+    if (cliOptions.overwrite) {
+        const _rootDir = get_root(`${_projectName}`);
+        rm_dir(_rootDir)
+    }
+    if (cliOptions.overwriteMonorepo) {
+        const _rootDir = get_root(`${_projectName}-monorepo`);
+        rm_dir(_rootDir)
     }
 }

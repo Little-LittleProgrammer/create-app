@@ -3,7 +3,8 @@ import { defineStore } from 'pinia';
 // state
 const createState = () => {
     const state = {
-        username: 'asd'
+        username: '',
+        email: ''
     };
     return state;
 };

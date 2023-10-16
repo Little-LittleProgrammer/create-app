@@ -6,9 +6,9 @@ function get_argv() {
     return _argv;
 }
 
-function bin_run_ignore(bin: string) {
+function bin_run_ignore(bin: string, opts = {}) {
     try {
-        const _output = execSync(bin);
+        const _output = execSync(bin, opts);
         return _output.toString()
     } catch (error) {
         console.error(error);

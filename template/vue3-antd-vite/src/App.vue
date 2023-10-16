@@ -1,5 +1,5 @@
 <template>
-    <a-config-provider :locale="locale">
+    <a-config-provider :locale="locale" :theme="getThemeMode">
         <div id="app" >
             <router-view v-if="sysStore.menuDataLoadingEnd"></router-view>
             <export-file></export-file>
@@ -22,6 +22,7 @@ import { useSysStore } from '@/store/modules/systemManage';
 import ExportFile from '@/components/export-file/export-modal.vue';
 import { useProjectSetting } from '@q-front-npm/vue3-antd-pc-ui';
 import { IMenuData } from '@q-front-npm/types/vue/router';
+import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 
 export default defineComponent({
     name: 'App',
@@ -35,6 +36,7 @@ export default defineComponent({
         const globalStore = useGlobalStore();
         const {getSearchButton} = useProjectSetting();
         const sysStore = useSysStore();
+        const {getThemeMode} = useThemeSetting();
         let requestNum = 0;
         const get_global_env = () => { // 环境检测
             api_global_env().then(res => {
@@ -57,10 +59,11 @@ export default defineComponent({
             if (globalStore.authorityManage) {
                 const _res = await api_manage_user_auths();
                 if (_res.code == 200) {
-                    // sysStore.mainMenuData = _res.data.list;
+                    userStore.username = _res.data.current_user.name || '';
+                    userStore.email = _res.data.current_user.email || '';
                     sysStore.initMenuData = _res.data.init_path || '';
                     sysStore.menuDataLoadingEnd = true;
-                    sysStore.set_format_route_list(_res.data.list);
+                    sysStore.set_format_route_list(_res.data.auth_list);
                     getSearchButton.value && get_net_router(sysStore.mainMenuData as Required<IMenuData>[]);
                     if (!window.location.href.includes('/backend/')) {
                         if (_res.data.init_path == '') {
@@ -74,6 +77,8 @@ export default defineComponent({
                             });
                         }
                     }
+                } else if (_res.code === 400) {
+                    alert(`错误信息: ${_res.msg}`);
                 }
             } else {
                 const _res = import('@/menus/index');
@@ -92,6 +97,7 @@ export default defineComponent({
 
         return {
             locale,
+            getThemeMode,
             userStore,
             globalStore,
             sysStore,

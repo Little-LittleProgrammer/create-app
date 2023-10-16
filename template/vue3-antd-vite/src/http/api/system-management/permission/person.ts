@@ -1,30 +1,26 @@
 import { defHttp } from '@/http/axios';
 import type { IMenuData } from '@q-front-npm/types/vue/router';
 enum Api {
-    userList = '/permission/user/list',
-    userAuths= '/check/auths',
-    userCreate = '/permission/user/replace',
-    userDelete = '/permission/user/delete',
+    userList = '/manage/user/index',
+    userAuths= '/manage/user/auths',
+    userCreate = '/manage/user/create',
+    userEdit = '/manage/user/update',
+    userDelete = '/manage/user/delete',
+}
+
+interface ICurrentUser {
+    email: string;
+    id: number;
+    name: string
 }
 
 interface IUserAuths {
     /**
- * email
- */
-    email?: string;
-    /**
      * 初始路径
      */
     init_path?: string;
-    /**
-     * 初始路径id
-     */
-    init_path_id?: number;
-    list: IMenuData[];
-    /**
-     * user_id
-     */
-    user_id?: number;
+    auth_list: IMenuData[];
+    current_user: ICurrentUser
     btn_list?: string[];
 }
 
@@ -85,15 +81,21 @@ export function api_manage_user_auths() {
 
 // 用户设置-列表
 export function api_manage_user_list() {
-    return defHttp.get<Result<Record<'list', ITableList[]>>>({
+    return defHttp.get<Result<Record<'table_list', ITableList[]>>>({
         url: Api.userList
     });
 }
 
 // 用户设置-保存添加
-export function api_manage_user_edit(data: IPersonEditData) {
+export function api_manage_user_add(data: IPersonEditData) {
     return defHttp.post<Result<Record<'id', number>>>({
         url: Api.userCreate,
+        data
+    });
+}
+export function api_manage_user_edit(data: IPersonEditData) {
+    return defHttp.post<Result<Record<'id', number>>>({
+        url: Api.userEdit,
         data
     });
 }

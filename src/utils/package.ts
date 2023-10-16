@@ -1,4 +1,31 @@
 import { execSync } from 'child_process'
+import {
+    green
+  } from 'kolorist'
+import { cli_update } from "../questions/update";
+import { bin_run_ignore, bin_run_inherit } from "./command";
+import pkg from '../../package.json'
+
+export async function need_update() {
+    const _string = (bin_run_ignore('npm show qm-create-app versions'))?.replaceAll('\'', '\"');
+    if (_string) {
+        const _arr = JSON.parse(_string);
+        if (_arr || _arr.length > 0) {
+            let _newVersion = _arr[_arr.length-1];
+            if (_newVersion !== pkg.version) {
+                const _options = await cli_update(_newVersion, pkg.version);
+                if (_options.isUpdate) {
+                    bin_run_inherit('npm update create-app -g');
+                    green('update ok');
+                    return true;
+                } else {
+                    return false
+                }
+            }
+        }
+    }
+    return false
+}
 
 export function has_pnpm() {
     try {

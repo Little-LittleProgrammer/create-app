@@ -1,6 +1,6 @@
 <!--  -->
 <template>
-    <q-drawer v-bind="$attrs" @register="register" @ok="role_save" @close="role_cancel">
+    <q-antd-drawer v-bind="$attrs" @register="register" @ok="role_save" @close="role_cancel">
         <a-form :model="data.roleFormData" class="qm-form t-120">
             <a-form-item label="角色名称">
                 <a-input v-model:value="data.roleFormData.role_name"></a-input>
@@ -23,17 +23,17 @@
                 <a-textarea :rows="4" v-model:value="data.roleFormData.remark" />
             </a-form-item>
         </a-form>
-    </q-drawer>
+    </q-antd-drawer>
 </template>
 
 <script lang='ts' setup>
 import { reactive, onMounted, watch} from 'vue';
-import {QDrawer, useDrawerInner} from '@q-front-npm/vue3-antd-pc-ui';
-import { api_manage_role_edit, api_manage_role_data, IRoleData } from '@/http/api/system-management/permission/role';
+import { useDrawerInner} from '@q-front-npm/vue3-antd-pc-ui';
+import { api_manage_role_edit, api_manage_role_create, api_manage_role_data, IRoleData } from '@/http/api/system-management/permission/role';
 import { api_manage_auth_list } from '@/http/api/system-management/permission/menu-config';
 import { useMessage } from '@q-front-npm/hooks/vue';
+import type { IMenuData } from '@q-front-npm/types/vue/router';
 import { js_utils_deep_copy } from '@q-front-npm/utils';
-import { IMenuData } from '@q-front-npm/types/vue/router';
 interface DataProps {
     pageType: string
     roleFormData: Omit<IRoleData, 'init_auth_id'> & Record<'init_auth_id', number[]>,
@@ -100,9 +100,9 @@ watch(() => data.pageType, (val) => {
 // 获取树结构
 const get_tree_data = async() => {
     const _treeData = await api_manage_auth_list();
-    update_tree_scope(_treeData.data.list); // 权限树结构添加 scope-slot 属性
-    data.authTreeData = js_utils_deep_copy(_treeData.data.list); // 权限树结构
-    data.pageTreeData = js_utils_deep_copy(_treeData.data.list); // 页面树结构
+    update_tree_scope(_treeData.data.table_list); // 权限树结构添加 scope-slot 属性
+    data.authTreeData = js_utils_deep_copy(_treeData.data.table_list); // 权限树结构
+    data.pageTreeData = js_utils_deep_copy(_treeData.data.table_list); // 页面树结构
     filter_tree_remove_api(data.pageTreeData); // 页面树结构过滤接口节点
     get_pid_arr(data.pageTreeData);
 };
@@ -187,7 +187,8 @@ const role_save = () => {
     });
     changeLoading(true);
     changeOkLoading(true);
-    api_manage_role_edit({
+    const _api = data.pageType === 'edit' ? api_manage_role_edit : api_manage_role_create;
+    _api({
         ..._formData,
         init_auth_id: _formData.init_auth_id[0]
     }).then(res => {
