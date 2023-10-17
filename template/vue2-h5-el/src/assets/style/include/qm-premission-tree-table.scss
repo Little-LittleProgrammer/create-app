@@ -1,0 +1,113 @@
+.qm-premission-tree-table{
+    // background:linear-gradient(#ffffff 50%, #FAFAFA 50%);
+    // background-size: 100% 78px;
+    border-top: 1px solid #EBEEF5;
+    &-tb,&-th{
+        display: flex;
+        width: 100%;
+        span{
+            line-height: 24px;
+            white-space: normal;
+            display: flex;
+            align-items: center;
+            &.s-name{
+                width: 150px;
+                font-size: 12px;
+                em{
+                    color: red;
+                }
+            }
+            &.s-url{
+                flex: 1;
+                width: 100%;
+                font-size: 12px;
+                word-break: break-all;
+            }
+            &.s-project{
+                width: 250px;
+                font-size: 12px;
+            }
+            &.s-fun{
+                width: 280px;
+                font-size: 12px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .el-button{
+                    padding: 3px 5px;
+                    line-height: 24px;
+                    display: inline-block;
+                }
+            }
+        }
+    }
+    &-th{
+        span{
+            font-weight: bold;
+            line-height: 36px;
+            font-size: 14px;
+            &.s-name{
+                font-size: 14px;
+                width: 236px;
+                padding-left: 10px;
+                border-left: 1px solid #EBEEF5;
+                border-right: 1px solid #EBEEF5;
+            }
+            &.s-url{
+                padding-left: 10px;
+                font-size: 14px;
+            }
+            &.s-project{
+                font-size: 14px;
+                border-left: 1px solid #EBEEF5;
+                border-right: 1px solid #EBEEF5;
+                padding: 0 10px;
+            }
+            &.s-fun{
+                font-size: 14px;
+                border-right: 1px solid #EBEEF5;
+            }
+        }
+    }
+    .el-tree-node__content{
+        border-right: 1px solid #EBEEF5;
+        border-left: 1px solid #EBEEF5;
+        border-bottom: 1px solid #EBEEF5;
+        line-height: 20px;
+        height: auto;
+        // padding: 10px 0;
+    }
+    .el-tree-node{
+        .s-url{
+            margin-left: 72px;
+            border-left: 1px solid #EBEEF5;
+            border-right: 1px solid #EBEEF5;
+            padding: 0 10px;
+        }
+        .s-project{
+            border-right: 1px solid #EBEEF5;
+            padding: 0 10px;
+        }
+        .el-tree-node{
+            .s-url{
+                margin-left: 54px;
+            }
+            .el-tree-node{
+                .s-url{
+                    margin-left: 36px;
+                }
+                .el-tree-node{
+                    .s-url{
+                        margin-left: 18px;
+                    }
+                    .el-tree-node{
+                        .s-url{
+                            margin-left: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
