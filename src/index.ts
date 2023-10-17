@@ -26,8 +26,8 @@ async function create_app() {
                 throw new Error('参数不合法，格式为 `cap 项目名称 项目模板`')
             }
         } else {
-            await delete_overwrite_dir()
             await create_app_questions();
+            await delete_overwrite_dir()
         }
         copy_project();
         install()

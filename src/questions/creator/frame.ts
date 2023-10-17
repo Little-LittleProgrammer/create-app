@@ -3,6 +3,7 @@ import {
     cyan,
     magenta,
     yellow,
+    green
   } from 'kolorist'
 import { PromptObject } from 'prompts';
 import { cliOptions } from '../../enums/default-options';

@@ -43,12 +43,12 @@
   "author": "Evan Wu",
   "license": "MIT",
   "dependencies": {
-    "@q-front-npm/shared": "workspace:*",
-    "@q-front-npm/utils": "workspace:*"
+    "@q-front-npm/shared": "~1.1.0",
+    "@q-front-npm/utils": "~1.1.0"
   },
   "devDependencies": {
-    "@q-front-npm-configs/vite": "workspace:*",
-    "@q-front-npm/types": "workspace:*",
+    "@q-front-npm-configs/vite": "~1.1.0",
+    "@q-front-npm/types": "~1.1.0",
     "@vue/test-utils": "^2.4.0",
     "sass": "^1.63.3",
     "vue": "~3.3.4",

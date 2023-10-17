@@ -11,8 +11,13 @@
     "create-app": "index.js",
     "cap": "index.js"
   },
+  "files": [
+    "index.js",
+    "template",
+    "dist"
+  ],
   "keywords": [],
-  "author": "",
+  "author": "Evan Wu",
   "license": "ISC",
   "devDependencies": {
     "@types/fs-extra": "^11.0.2",

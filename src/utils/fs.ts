@@ -1,4 +1,5 @@
-import fs, { copyFileSync, existsSync, mkdirSync, rmSync, rmdirSync, statSync } from 'fs-extra'
+import fs, { copyFileSync, existsSync, mkdirSync, rmSync, removeSync, statSync } from 'fs-extra'
+import { green, red } from 'kolorist'
 import path from 'node:path'
 
 export function non_exist_dir_name(name: string): boolean {
@@ -35,14 +36,18 @@ export function rm_dir(dir: string) {
     if (!existsSync(dir)) {
         return
     }
-    rmdirSync(dir);
+    console.log(red(`正在删除文件夹${dir}`))
+    removeSync(dir);
+    console.log(green(`删除文件夹${dir}成功`))
 }
 
 export function rm_file(filePath: string) {
     if (!existsSync(filePath)) {
         return
     }
+    console.log(red(`正在删除文件${filePath}`))
     rmSync(filePath);
+    console.log(green(`删除文件${filePath}成功`))
 }
 
 export function edit_file(file: string, callback: (content: string) => string) {
