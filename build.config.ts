@@ -10,6 +10,7 @@ export default defineBuildConfig({
     esbuild: {
       target: 'node16',
       platform: 'node',
+      minify: true
     },
   },
 })

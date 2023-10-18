@@ -1,6 +1,6 @@
 {
-  "name": "qm-create-app",
-  "version": "1.0.0",
+  "name": "create-qm-app",
+  "version": "1.0.1",
   "type": "module",
   "description": "",
   "scripts": {
@@ -8,8 +8,8 @@
     "build": "unbuild"
   },
   "bin": {
-    "create-app": "index.js",
-    "cap": "index.js"
+    "create-qm-app": "index.js",
+    "qmcap": "index.js"
   },
   "files": [
     "index.js",

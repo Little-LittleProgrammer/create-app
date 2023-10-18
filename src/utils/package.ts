@@ -8,7 +8,7 @@ import pkg from '../../package.json'
 
 export async function need_update() {
     try {
-        const _string = (bin_run_ignore('npm show qm-create-app versions'))?.replaceAll('\'', '\"');
+        const _string = (bin_run_ignore('npm show create-qm-app versions'))?.replaceAll('\'', '\"');
         if (_string) {
             const _arr = JSON.parse(_string);
             if (_arr || _arr.length > 0) {

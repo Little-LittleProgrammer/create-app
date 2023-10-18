@@ -14,7 +14,6 @@ async function create_app() {
     if (!_needUpdate) {
         // 首先判断是否带参数
         const _argv = get_argv();
-        console.info(_argv);
         const _paramTarget = _argv._;
         if (_paramTarget.length ) {
             if (_paramTarget.length === 2) {
