@@ -11,7 +11,7 @@
 <script lang="ts">
 import { defineComponent, defineAsyncComponent} from 'vue';
 import zhCN from 'ant-design-vue/es/locale/zh_CN';
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@q-front-npm/hooks/vue/use-message';
 import { api_global_env } from '@/http/api/global';
 import { api_manage_user_auths } from './http/api/system-management/permission/person';
 import { router } from './router';

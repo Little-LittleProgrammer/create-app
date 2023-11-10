@@ -107,7 +107,7 @@ export default defineComponent({
 <script lang='ts' setup>
 import { defineComponent, reactive, PropType, computed, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
-import { useGo } from '@q-front-npm/hooks/vue';
+import { useGo } from '@q-front-npm/hooks/vue/use-page';
 
 const props = defineProps({
     menuData: {

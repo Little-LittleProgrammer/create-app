@@ -9,7 +9,7 @@
 import { computed, reactive } from 'vue';
 import { useDrawerInner, useForm, FormSchema } from '@q-front-npm/vue3-antd-pc-ui';
 import { IExampleData } from '../interface';
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@q-front-npm/hooks/vue/use-message';
 
 const emits = defineEmits(['ok', 'register']);
 const {createMessage} = useMessage();

@@ -42,7 +42,7 @@
 
 <script lang='ts' setup>
 import {gRegEnum} from '@q-front-npm/shared/enums';
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@q-front-npm/hooks/vue/use-message';
 import { IPersonEditData, ITableList } from '@/http/api/system-management/permission/person';
 import { api_manage_user_list, api_manage_user_delete, api_manage_user_edit, api_manage_user_add} from '@/http/api/system-management/permission/person';
 import { api_manage_role_options } from '@/http/api/system-management/permission/role';

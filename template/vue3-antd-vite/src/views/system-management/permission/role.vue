@@ -28,7 +28,7 @@
 import { api_manage_role_list, api_manage_role_delete} from '@/http/api/system-management/permission/role';
 import { IRoleAuths } from '@/http/api/system-management/permission/role'; // 接口
 import { defineComponent, reactive, toRefs, onMounted} from 'vue';
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@q-front-npm/hooks/vue/use-message';
 import {js_utils_set_table_height} from '@q-front-npm/utils';
 import { useAntdStore } from '@/store/modules/antd';
 import { useGlobalStore } from '@/store/modules/global';

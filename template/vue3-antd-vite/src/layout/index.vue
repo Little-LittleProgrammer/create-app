@@ -77,7 +77,7 @@ import { routerData } from '@/router';
 import { useThemeSetting } from '@/hooks/settings/use-theme-setting';
 import setting from '@/enums/projectEnum';
 import { BackTop } from 'ant-design-vue';
-import { useParamsAliveRoot } from '@q-front-npm/hooks/vue';
+import { useParamsAliveRoot } from '@q-front-npm/hooks/vue/use-params-alive';
 const router = useRouter();
 const globalStore = useGlobalStore();
 const sysStore = useSysStore();

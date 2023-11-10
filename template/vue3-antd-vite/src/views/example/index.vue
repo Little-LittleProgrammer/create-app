@@ -41,7 +41,7 @@
 import { computed, defineComponent, reactive } from 'vue';
 import {Alert} from 'ant-design-vue';
 import { useTable, useDrawer } from '@q-front-npm/vue3-antd-pc-ui';
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@q-front-npm/hooks/vue/use-message';
 import {api_partner_list, api_partner_select} from '@/http/api/cp-management';
 import edit from './components/edit.vue';
 export default defineComponent({

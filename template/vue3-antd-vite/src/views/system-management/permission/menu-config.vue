@@ -87,7 +87,7 @@
 </template>
 
 <script lang='ts'>
-import { useMessage } from '@q-front-npm/hooks/vue';
+import { useMessage } from '@q-front-npm/hooks/vue/use-message';
 import { TableProps } from '@q-front-npm/vue3-antd-pc-ui';
 import { api_manage_auth_create, api_manage_auth_delete, api_manage_auth_list, api_manage_auth_sort, api_manage_auth_update } from '@/http/api/system-management/permission/menu-config';
 import { defineComponent, reactive, toRefs, onMounted, ref, computed, unref } from 'vue';

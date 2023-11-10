@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import { theme as antdTheme } from 'ant-design-vue';
 import { useProjectSetting } from '@q-front-npm/vue3-antd-pc-ui';
 import { js_utils_dom_add_class, js_utils_dom_has_class } from '@q-front-npm/utils';
-import {gDateUtil} from '@q-front-npm/utils';
+import {dayjs} from 'dayjs';
 import { gMemorialEnum } from '@q-front-npm/shared/enums';
 
 // 写成hooks, 方便以后扩展, 扩展项目可视化配置
@@ -49,7 +49,7 @@ export function useThemeSetting() {
             const _timeNow = globalStore.date;
             type Enum = keyof typeof gMemorialEnum
             for (const key in gMemorialEnum) {
-                if (gDateUtil(_timeNow).format('MM-DD') == gMemorialEnum[key as Enum]) {
+                if (dayjs(_timeNow).format('MM-DD') == gMemorialEnum[key as Enum]) {
                     const hasGrayClass = js_utils_dom_has_class(dom, 'gray-mode');
                     if (!hasGrayClass) {
                         js_utils_dom_add_class(dom, 'gray-mode');

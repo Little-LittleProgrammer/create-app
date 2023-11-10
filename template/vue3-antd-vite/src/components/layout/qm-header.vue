@@ -27,7 +27,7 @@
 </template>
 
 <script lang='ts' setup>
-import { useGo } from '@q-front-npm/hooks/vue';
+import { useGo } from '@q-front-npm/hooks/vue/use-page';
 import { onMounted, PropType, computed } from 'vue';
 import { useRoute } from 'vue-router';
 import { useSysStore } from '@/store/modules/systemManage';

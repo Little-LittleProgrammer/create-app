@@ -1,4 +1,4 @@
-import { js_create_local_storage } from '@q-front-npm/utils';
+import { js_create_local_storage } from '@q-front-npm/utils/extra';
 import { message } from 'ant-design-vue';
 import { defineStore } from 'pinia';
 
