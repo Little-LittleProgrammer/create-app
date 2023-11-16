@@ -1,5 +1,5 @@
-import { ViteEnv } from '@q-front-npm-configs/vite';
-import { INuxtConfig } from './types';
+import type { ViteEnv } from '@q-front-npm-configs/vite';
+import type { INuxtConfig } from './types';
 
 export function pwa_module(env: ViteEnv):INuxtConfig {
     const {VITE_USE_PWA, VITE_GLOB_APP_TITLE} = env;

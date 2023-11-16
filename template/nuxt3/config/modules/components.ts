@@ -1,4 +1,4 @@
-import { INuxtConfig } from './types';
+import type { INuxtConfig } from './types';
 import fs from 'fs';
 import path from 'path';
 // 获取base.scss文件

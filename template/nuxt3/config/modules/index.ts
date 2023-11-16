@@ -1,7 +1,7 @@
 import type { ViteEnv } from '@q-front-npm-configs/vite';
 import { componentsModules } from './components';
 import { dev_proxy } from './dev-proxy';
-import { INuxtConfig } from './types';
+import type { INuxtConfig } from './types';
 import { devtools } from './dev-tools';
 import { piniaModules } from './pinia';
 import { pwa_module } from './pwa';

@@ -1,5 +1,4 @@
-import { js_is_function } from '@q-front-npm/utils';
-import { js_create_local_storage } from '@q-front-npm/utils/extra';
+import { js_create_local_storage, js_is_function } from '@q-front-npm/utils';
 
 /**
  * @description 添加时间戳

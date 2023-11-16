@@ -1,5 +1,5 @@
-import { ViteEnv, vite_utils_create_proxy } from '@q-front-npm-configs/vite';
-import { INuxtConfig } from './types';
+import { type ViteEnv, vite_utils_create_proxy } from '@q-front-npm-configs/vite';
+import type { INuxtConfig } from './types';
 
 export function dev_proxy(env: ViteEnv): INuxtConfig {
     const {VITE_PROXY, VITE_PORT} = env;

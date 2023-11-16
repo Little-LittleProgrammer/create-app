@@ -18,6 +18,9 @@ dist*
 .DS_Store
 *.pem
 
+#rollup
+.rollup.cache
+
 # debug
 npm-debug.log*
 yarn-debug.log*
@@ -42,3 +45,16 @@ yarn-error.log*
 
 # vite
 vite.config.ts.*
+**/tsconfig.tsbuildinfo
+
+# docs
+cache
+.temp
+
+# Nuxt dev/build outputs
+.output
+.data
+.nuxt
+.nitro
+.cache
+public/css/*
